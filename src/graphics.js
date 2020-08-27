@@ -15,6 +15,7 @@ const indexToCoord = index => index * squareSize;
 
 export const drawSquare = (x, y, color = "green") => {
   ctx.fillStyle = color;
+
   ctx.fillRect(indexToCoord(x), indexToCoord(y), squareSize, squareSize);
 }
 

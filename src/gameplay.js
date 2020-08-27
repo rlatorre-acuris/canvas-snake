@@ -1,5 +1,8 @@
-import { gridWidth, gridHeight, initContext, drawSquare, removeSquare, clearScreen } from "./utils";
+import { gridWidth, gridHeight, initContext, drawSquare, removeSquare, clearScreen } from "./graphics";
 
+const colors = ["hotpink", "red", "orange", "yellow", "green", "turquoise", "indigo", "violet"];
+let snakeColor = 0;
+let targetColor = 1;
 const gridArea = gridWidth * gridHeight;
 const growingBatch = 5;
 
@@ -26,7 +29,7 @@ const placeSnake = () => {
   headX = tailX = x;
   headY = tailY = y;
   snakeLength = 1;
-  drawSquare(x, y);
+  drawSquare(x, y, colors[snakeColor]);
   console.log(`Snake placed, headX=${headX} headY=${headY}, x=${x} y=${y}`);
 }
 
@@ -41,7 +44,7 @@ const placeTarget = () => {
       if (counter === index) {
         targetX = i;
         targetY = j;
-        drawSquare(i, j, "red");
+        drawSquare(i, j, colors[targetColor]);
         placed = true;
       }
       counter++;
@@ -66,7 +69,7 @@ const moveAndGrowSnake = () => {
       headX--;
       break;
   }
-  drawSquare(headX, headY);
+  drawSquare(headX, headY, colors[snakeColor]);
   if (squaresToGrow) {
     snakeLength++;
     squaresToGrow--;
@@ -124,6 +127,8 @@ export const handleGameIteration = () => {
   }
   if (hitDetection()) {
     squaresToGrow += growingBatch;
+    snakeColor = (snakeColor + 1) % 8;
+    targetColor = (targetColor + 1) % 8;
     placeTarget();
   }
 }
