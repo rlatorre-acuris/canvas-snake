@@ -1,5 +1,5 @@
-export const gridWidth = 30;
-export const gridHeight = 30;
+export const gridWidth = 50;
+export const gridHeight = 50;
 const squareSize = 20;
 
 let ctx;
