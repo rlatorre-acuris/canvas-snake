@@ -8,7 +8,7 @@ let squaresToGrow = 0;
 let snakeLength = 0;
 let direction = 0;
 
-const grid;
+let grid;
 
 const initGrid = () => {
   grid = new Array(gridWidth);
@@ -23,10 +23,11 @@ const initGrid = () => {
 const placeSnake = () => {
   const x = Math.floor(Math.random() * gridWidth);
   const y = Math.floor(Math.random() * gridHeight);
-  headX, tailX = x;
-  headY, tailY = y;
+  headX = tailX = x;
+  headY = tailY = y;
   snakeLength = 1;
   drawSquare(x, y);
+  console.log(`Snake placed, headX=${headX} headY=${headY}, x=${x} y=${y}`);
 }
 
 const placeTarget = () => {
@@ -60,6 +61,7 @@ const moveAndGrowSnake = () => {
       break;
     case 3:
       headY++;
+      break;
     case 4:
       headX--;
       break;
@@ -81,6 +83,7 @@ const moveAndGrowSnake = () => {
         break;
       case 3:
         tailY++;
+        break;
       case 4:
         tailX--;
         break;
@@ -99,8 +102,8 @@ const hitDetection = () => {
   return false;
 }
 
-export const resetGame = () => {
-  squaresToGrow, snakeLength, direction = 0;
+const resetGame = () => {
+  squaresToGrow = snakeLength = direction = 0;
   initGrid();
   clearScreen();
   placeSnake();
@@ -111,3 +114,40 @@ export const initGame = () => {
   initContext();
   resetGame();
 }
+
+export const handleGameIteration = () => {
+  if (!direction) return;
+  moveAndGrowSnake();
+  if (collisionDetection()) {
+    direction = 0;
+    return;
+  }
+  if (hitDetection()) {
+    squaresToGrow += growingBatch;
+    placeTarget();
+  }
+}
+
+export const handleControls = (command) => {
+  switch(command) {
+    case "up":
+      direction = 1;
+      break;
+    case "right":
+      direction = 2;
+      break;
+    case "down":
+      direction = 3;
+      break;
+    case "left":
+      direction = 4;
+      break;
+    case "pause":
+    default:
+      if (direction) {
+        direction = 0;
+      } else {
+        resetGame();
+      } 
+  }
+} 

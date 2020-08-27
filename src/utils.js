@@ -1,6 +1,6 @@
-export const gridWidth = 60;
-export const gridHeight = 60;
-const squareSize = 10;
+export const gridWidth = 30;
+export const gridHeight = 30;
+const squareSize = 20;
 
 let ctx;
 

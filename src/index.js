@@ -1,3 +1,12 @@
-import { getContext } from "./utils";
+import { initGame, handleGameIteration } from "./gameplay";
+import { handleInput } from "./input";
 
-let ctx = getContext();
+console.log("document loaded");
+initGame();
+
+setInterval(handleGameIteration, 100);
+
+handleInput();
+
+
+
